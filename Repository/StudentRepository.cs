@@ -66,7 +66,11 @@ namespace Usuarios.Api.Repository
 
         public async Task<Student?> GetById(int studentId)
         {
-            return await _appDbContext.Students.FindAsync(studentId);
+            return await _appDbContext.Students
+                    .Include(s => s.Emails.Where(s=>s.IsActive == true))
+                    .Include(s => s.Addresses.Where(s => s.IsActive == true))
+                    .Include(s => s.Phones.Where(s => s.IsActive == true))
+                    .FirstOrDefaultAsync(s => s.StudentId == studentId);
         }
 
         public async Task<int> Update(int studentId, Student student)

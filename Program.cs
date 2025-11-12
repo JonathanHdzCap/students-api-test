@@ -51,6 +51,9 @@ if (app.Environment.IsDevelopment())
 
 app.MapGet("/", () => "Api .Net Minimal API Students");
 app.MapStudentsEndpoints();
+app.MapEmailsEndpoints();
+app.MapPhonesEndpoints();
+app.MapAddressesEndpoints();
 
 app.UseHttpsRedirection();
 app.Run();

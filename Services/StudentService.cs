@@ -30,7 +30,7 @@ namespace Usuarios.Api.Services
             try
             {
                 if (student.Emails is null || student.Phones is null || student.Addresses is null ||
-                        student.Emails.Count != 1 || student.Phones.Count != 1 || student.Addresses.Count != 1)
+                        student.Emails.Count <= 0  || student.Phones.Count <= 0 || student.Addresses.Count <= 0)
                 {
                     return 0;
                 }
@@ -129,6 +129,19 @@ namespace Usuarios.Api.Services
             }
         }
 
+        public async Task<string?> AddEmailAsync(Email emailData)
+        {
+            try
+            {
+                return await _emailRepository.Create(emailData);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return null;
+            }
+        }
+
         public async Task<int> UpdateEmailAsync(string email, Email emailData)
         {
             try
@@ -154,19 +167,8 @@ namespace Usuarios.Api.Services
         }
         #endregion Email
 
-        public async Task<List<Address>> GetAllAddressesAsync(int studentId)
-        {
-            try
-            {
-                return await _addressRepository.GetAll(studentId);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                return null;
-            }
-        }
 
+        #region Phones
         public async Task<List<Phone>> GetAllPhonesAsync(int studentId)
         {
             try
@@ -179,6 +181,99 @@ namespace Usuarios.Api.Services
                 return null;
             }
         }
-        
+        public async Task<int?> AddPhoneAsync(Phone phone)
+        {
+            try
+            {
+                return await _phoneRepository.Create(phone);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return null;
+            }
+        }
+
+        public async Task<int> UpdatePhoneAsync(int phoneId, Phone phone)
+        {
+            try
+            {
+                return await _phoneRepository.Update(phoneId, phone);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return 0;
+            }
+        }
+
+        public async Task<int> DeletePhoneAsync(int phoneId)
+        {
+            try
+            {
+                return await _phoneRepository.Delete(phoneId);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return 0;
+            }
+        }
+        #endregion Phones
+
+
+        #region Addresses
+        public async Task<List<Address>> GetAllAddressesAsync(int studentId)
+        {
+            try
+            {
+                return await _addressRepository.GetAll(studentId);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return null;
+            }
+        }
+        public async Task<int?> AddAddressAsync(Address address)
+        {
+            try
+            {
+                return await _addressRepository.Create(address);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return null;
+            }
+        }
+
+        public async Task<int> UpdateAddressAsync(int addressId, Address address)
+        {
+            try
+            {
+                return await _addressRepository.Update(addressId, address);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return 0;
+            }
+        }
+
+        public async Task<int> DeleteAddressAsync(int addressId)
+        {
+            try
+            {
+                return await _addressRepository.Delete(addressId);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return 0;
+            }
+        }
+        #endregion Addresses
+
     }
 }
