@@ -27,7 +27,7 @@ jobs:
         run: dotnet build --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o ./publish
+        run: dotnet publish ./Usuarios.Api/Usuarios.Api.csproj -c Release -o ./publish
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -61,7 +61,8 @@ jobs:
         with:
           app-name: 'student-api-test'
           slot-name: 'Production'
-          package: .
+          package: net-app-publish
 
           
+
 
