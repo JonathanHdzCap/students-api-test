@@ -1,5 +1,4 @@
-﻿using Usuarios.Api.Models;
-using Usuarios.Api.Services;
+﻿using Usuarios.Api.Endpoints.Handlers;
 
 namespace Usuarios.Api.Endpoints
 {
@@ -11,45 +10,19 @@ namespace Usuarios.Api.Endpoints
                 .WithTags("Students");
 
             //Obtener todos los estudiantes
-            group.MapGet("/", async (IStudentService studentService) =>
-                Results.Ok(await studentService.GetAllStudentsAsync()));
+            group.MapGet("/", StudentHandlers.GetAll);
 
             //Obtener por Id
-            group.MapGet("/{studentId}", async (IStudentService studentService, int studentId) =>
-            {
-                if (studentId <= 0)
-                    return Results.BadRequest();
-
-                var student = await studentService.GetStudentAsync(studentId);
-                return student is null ? Results.NotFound() : Results.Ok(student);
-            });
+            group.MapGet("/{studentId}", StudentHandlers.GetById);
 
             //Crear nuevo estudiante
-            group.MapPost("/", async (IStudentService studentService, Student student) =>
-            {
-                var result = await studentService.AddNewStudentAsync(student);
-                return Results.Created($"/students/{result}", student);
-            });
+            group.MapPost("/", StudentHandlers.Create);
 
             //Actualizar estudiante
-            group.MapPut("/{studentId}", async (IStudentService studentService, int studentId, Student student) =>
-            {
-                if (studentId <= 0)
-                    return Results.BadRequest();
-
-                var success = await studentService.UpdateStudentAsync(studentId, student);
-                return success > 0 ? Results.NoContent() : Results.NotFound();
-            });
+            group.MapPut("/{studentId}", StudentHandlers.Update);
 
             //Baja logica del estudiante
-            group.MapDelete("/{studentId}", async (IStudentService studentService, int studentId) =>
-            {
-                if (studentId <= 0)
-                    return Results.BadRequest();
-
-                var result = await studentService.DeleteStudentAsync(studentId);
-                return result <= 0 ? Results.NotFound() : Results.Ok(result);
-            });
+            group.MapDelete("/{studentId}", StudentHandlers.Delete);
         }
     }
 }
