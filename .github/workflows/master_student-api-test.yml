@@ -61,6 +61,7 @@ jobs:
         with:
           app-name: 'student-api-test'
           slot-name: 'Production'
-          package: ${{ github.workspace }}/.net-app
+          package: .
 
           
+
