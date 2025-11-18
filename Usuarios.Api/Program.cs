@@ -56,7 +56,7 @@ app.UseSwaggerUI(c =>
     c.RoutePrefix = "swagger"; // o "" para raíz
 });
 
-app.MapGet("/", () => "Api .Net Minimal API Students");
+app.MapGet("/", () => "Api .Net Minimal API Studentss");
 app.MapStudentsEndpoints();
 app.MapEmailsEndpoints();
 app.MapPhonesEndpoints();
