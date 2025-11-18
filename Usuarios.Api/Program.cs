@@ -50,7 +50,11 @@ app.UseCors("AllowAll");
 //}
 
 app.UseSwagger();
-app.UseSwaggerUI();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Students API V1");
+    c.RoutePrefix = "swagger"; // o "" para raíz
+});
 
 app.MapGet("/", () => "Api .Net Minimal API Students");
 app.MapStudentsEndpoints();
@@ -58,5 +62,8 @@ app.MapEmailsEndpoints();
 app.MapPhonesEndpoints();
 app.MapAddressesEndpoints();
 
-app.UseHttpsRedirection();
+if (app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 app.Run();
