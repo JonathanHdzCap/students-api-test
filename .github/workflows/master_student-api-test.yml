@@ -1,8 +1,8 @@
 name: Build and deploy ASP.NET Core app
 
 on:
-  push:
-    branches: [ master ]
+  # push:
+  #   branches: [ master ]
   workflow_dispatch:
 
 jobs:
@@ -36,6 +36,7 @@ jobs:
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_D3D083EEF7794BFFA3312B49EE174463 }}
 
       - name: Deploy to Azure Web App
+        id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'student-api-test'
